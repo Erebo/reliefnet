@@ -20,6 +20,7 @@ import { apiClient } from '../../api/client';
 import { StatusBadge } from '../../components/ui/StatusBadge';
 import { useScenario } from '../../context/ScenarioContext';
 import { useMapState } from '../../context/MapStateContext';
+import { feniSarData, noakhaliSarData, sylhetSarData } from './sarFloodData';
 
 interface MapProps {
   initialLat?: number;
@@ -56,18 +57,8 @@ const FLOOD_SCENARIOS = [
     affected_population: 185000,
     affected_upazilas: ['Sonagazi', 'Feni Sadar', 'Parshuram', 'Fulgazi'],
     center: { lat: 22.95, lon: 91.41, zoom: 10.5 },
-    polygon: {
-      type: 'Feature' as const,
-      geometry: {
-        type: 'Polygon' as const,
-        coordinates: [[
-          [91.350, 22.780], [91.420, 22.780], [91.440, 22.840], [91.460, 22.920],
-          [91.450, 23.080], [91.480, 23.180], [91.450, 23.250], [91.400, 23.230],
-          [91.380, 23.120], [91.360, 23.000], [91.340, 22.890], [91.350, 22.780],
-        ]],
-      },
-      properties: { name: 'Feni River Inundation Zone', severity: 'CRITICAL' },
-    },
+    polygon: feniSarData.polygon,
+    sar_metadata: feniSarData.sarMetadata,
     institutions: [
       { id: 1, name: 'Sonagazi Government College', bangla_name: 'সোনাগাজী সরকারি কলেজ', type: 'COLLEGE', district: 'Feni', upazila: 'Sonagazi', union: 'Sonagazi Sadar', latitude: 22.8485, longitude: 91.3912, capacity_est: 1200, phone: '+880 1819-345678', email: 'principal@sonagazigovtcollege.edu.bd', address: 'College Road, Sonagazi, Feni' },
       { id: 2, name: 'Mangalkandi High School & Cyclone Shelter', bangla_name: 'মঙ্গলকান্দি উচ্চ বিদ্যালয়', type: 'SCHOOL', district: 'Feni', upazila: 'Sonagazi', union: 'Mangalkandi', latitude: 22.8610, longitude: 91.3780, capacity_est: 1500, phone: '+880 1817-678901', email: 'mangalkandi.school@gmail.com', address: 'Mangalkandi Union, Sonagazi, Feni' },
@@ -89,17 +80,8 @@ const FLOOD_SCENARIOS = [
     affected_population: 94000,
     affected_upazilas: ['Companiganj', 'Senbagh', 'Subarnachar'],
     center: { lat: 22.76, lon: 91.22, zoom: 10.5 },
-    polygon: {
-      type: 'Feature' as const,
-      geometry: {
-        type: 'Polygon' as const,
-        coordinates: [[
-          [91.150, 22.650], [91.320, 22.650], [91.350, 22.760],
-          [91.280, 22.880], [91.180, 22.850], [91.120, 22.720], [91.150, 22.650],
-        ]],
-      },
-      properties: { name: 'Companiganj Tidal Inundation', severity: 'SEVERE' },
-    },
+    polygon: noakhaliSarData.polygon,
+    sar_metadata: noakhaliSarData.sarMetadata,
     institutions: [
       { id: 10, name: 'Companiganj Govt High School', bangla_name: 'কোম্পানীগঞ্জ সরকারি উচ্চ বিদ্যালয়', type: 'SCHOOL', district: 'Noakhali', upazila: 'Companiganj', union: 'Companiganj Sadar', latitude: 22.7850, longitude: 91.2350, capacity_est: 1100, phone: '+880 1810-112233', email: 'head@companiganjhs.edu.bd', address: 'Companiganj Sadar, Noakhali' },
       { id: 11, name: 'Senbagh Degree College', bangla_name: 'সেনবাগ ডিগ্রি কলেজ', type: 'COLLEGE', district: 'Noakhali', upazila: 'Senbagh', union: 'Senbagh Sadar', latitude: 22.8100, longitude: 91.1800, capacity_est: 800, phone: '+880 1811-445566', email: 'principal@senbaghcollege.edu.bd', address: 'Senbagh, Noakhali' },
@@ -118,17 +100,8 @@ const FLOOD_SCENARIOS = [
     affected_population: 210000,
     affected_upazilas: ['Gowainghat', 'Companiganj', 'Jaintapur'],
     center: { lat: 25.07, lon: 91.93, zoom: 10.5 },
-    polygon: {
-      type: 'Feature' as const,
-      geometry: {
-        type: 'Polygon' as const,
-        coordinates: [[
-          [91.800, 24.960], [91.920, 24.950], [92.050, 25.000], [92.080, 25.100],
-          [92.010, 25.180], [91.880, 25.170], [91.780, 25.100], [91.760, 25.020], [91.800, 24.960],
-        ]],
-      },
-      properties: { name: 'Surma-Kushiyara Flash Inundation Zone', severity: 'HIGH' },
-    },
+    polygon: sylhetSarData.polygon,
+    sar_metadata: sylhetSarData.sarMetadata,
     institutions: [
       { id: 20, name: 'Gowainghat Govt High School', bangla_name: 'গোয়াইনঘাট সরকারি উচ্চ বিদ্যালয়', type: 'SCHOOL', district: 'Sylhet', upazila: 'Gowainghat', union: 'Gowainghat Sadar', latitude: 25.0550, longitude: 91.9100, capacity_est: 1000, phone: '+880 1815-112233', email: 'head@gowainghaths.edu.bd', address: 'Gowainghat Sadar, Sylhet' },
       { id: 21, name: 'Jaintapur Degree College', bangla_name: 'জৈন্তাপুর ডিগ্রি কলেজ', type: 'COLLEGE', district: 'Sylhet', upazila: 'Jaintapur', union: 'Jaintapur Sadar', latitude: 25.0800, longitude: 92.0100, capacity_est: 750, phone: '+880 1816-445566', email: 'principal@jaintapurcollege.edu.bd', address: 'Jaintapur Sadar, Sylhet' },
@@ -203,6 +176,40 @@ export const MapLibreMap: React.FC<MapProps> = ({
   const [submittingVerify, setSubmittingVerify] = useState(false);
   const [submittingAssign, setSubmittingAssign] = useState(false);
   const [isMapLoaded, setIsMapLoaded] = useState(false);
+  const [isRadarMode, setIsRadarMode] = useState(false);
+
+  // Dynamic radar mode layer styling
+  useEffect(() => {
+    if (!map.current || !isMapLoaded) return;
+    try {
+      if (map.current.getLayer('flood-zones-fill')) {
+        map.current.setPaintProperty(
+          'flood-zones-fill',
+          'fill-color',
+          isRadarMode ? '#0284c7' : '#ef4444'
+        );
+        map.current.setPaintProperty(
+          'flood-zones-fill',
+          'fill-opacity',
+          isRadarMode ? 0.45 : 0.32
+        );
+      }
+      if (map.current.getLayer('flood-zones-line')) {
+        map.current.setPaintProperty(
+          'flood-zones-line',
+          'line-color',
+          isRadarMode ? '#38bdf8' : '#dc2626'
+        );
+        map.current.setPaintProperty(
+          'flood-zones-line',
+          'line-width',
+          isRadarMode ? 2.5 : 3
+        );
+      }
+    } catch (e) {
+      console.warn('Could not update map paint properties', e);
+    }
+  }, [isRadarMode, isMapLoaded]);
 
   // Sync initial props from URL navigation
   useEffect(() => {
@@ -617,12 +624,33 @@ export const MapLibreMap: React.FC<MapProps> = ({
 
           <div className="flex items-center gap-4 text-[11px] text-slate-600 font-medium">
             <span className="flex items-center gap-1.5">
-              <span className="w-3 h-3 rounded-sm bg-red-500/40 border-2 border-red-600 inline-block" />
-              <span className="text-red-700 font-bold">Flood Zone</span>
+              <span className={`w-3 h-3 rounded-sm ${isRadarMode ? 'bg-sky-500/40 border-2 border-sky-400' : 'bg-red-500/40 border-2 border-red-600'} inline-block`} />
+              <span className={isRadarMode ? 'text-sky-700 font-bold' : 'text-red-700 font-bold'}>
+                {isRadarMode ? 'SAR Radar Mask' : 'Flood Zone'}
+              </span>
             </span>
             <span className="flex items-center gap-1.5">
               <span className="w-3 h-3 rounded-full bg-emerald-500 border-2 border-white shadow-sm inline-block" />
               <span className="text-emerald-700 font-bold">Verify Point</span>
+            </span>
+          </div>
+
+          {/* Sentinel-1 SAR Radar Mode Switcher */}
+          <div className="pt-2 border-t border-slate-100 flex items-center justify-between">
+            <button
+              onClick={() => setIsRadarMode(!isRadarMode)}
+              className={`px-2 py-1 rounded text-[10px] font-bold flex items-center gap-1.5 transition-all border ${
+                isRadarMode
+                  ? 'bg-sky-950 text-sky-300 border-sky-700 shadow-sm ring-1 ring-sky-500/30'
+                  : 'bg-slate-50 hover:bg-slate-100 text-slate-700 border-slate-200'
+              }`}
+            >
+              <span className={`w-2 h-2 rounded-full ${isRadarMode ? 'bg-sky-400 animate-pulse' : 'bg-slate-400'}`} />
+              <span>{isRadarMode ? 'SAR Radar: ON' : 'View SAR Radar Mask'}</span>
+            </button>
+            <span className="text-[10px] text-slate-500 font-mono flex items-center gap-1">
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+              Sentinel-1 (10m)
             </span>
           </div>
         </div>
@@ -721,6 +749,40 @@ export const MapLibreMap: React.FC<MapProps> = ({
                     {activeScenario.affected_upazilas.join(', ')}
                   </div>
                 </div>
+
+                {/* Satellite SAR Sensor Telemetry */}
+                {activeScenario.sar_metadata && (
+                  <div className="bg-slate-900 text-slate-200 rounded-lg p-3 space-y-2 border border-slate-800 shadow-md">
+                    <div className="flex items-center justify-between border-b border-slate-800 pb-1.5">
+                      <div className="flex items-center gap-1.5 font-bold text-sky-400 text-xs">
+                        <span className="relative flex h-2 w-2">
+                          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-75"></span>
+                          <span className="relative inline-flex rounded-full h-2 w-2 bg-sky-500"></span>
+                        </span>
+                        <span>Copernicus Sentinel-1 SAR</span>
+                      </div>
+                      <span className="text-[9px] bg-sky-950 text-sky-300 border border-sky-800 px-1.5 py-0.5 rounded font-mono font-bold">10m C-Band</span>
+                    </div>
+                    <div className="grid grid-cols-2 gap-2 text-[10px]">
+                      <div>
+                        <span className="text-slate-400 block">Acquisition:</span>
+                        <span className="font-mono text-white font-semibold">{activeScenario.sar_metadata.acquisition}</span>
+                      </div>
+                      <div>
+                        <span className="text-slate-400 block">Polarization:</span>
+                        <span className="font-mono text-white font-semibold">{activeScenario.sar_metadata.polarization}</span>
+                      </div>
+                      <div>
+                        <span className="text-slate-400 block">Cloud Penetration:</span>
+                        <span className="text-emerald-400 font-semibold font-mono">{activeScenario.sar_metadata.cloudPenetration}</span>
+                      </div>
+                      <div>
+                        <span className="text-slate-400 block">Water Detection:</span>
+                        <span className="text-sky-300 font-mono font-semibold">{activeScenario.sar_metadata.waterDetectionThreshold}</span>
+                      </div>
+                    </div>
+                  </div>
+                )}
 
                 {/* Verification Points List */}
                 <div className="space-y-2">
