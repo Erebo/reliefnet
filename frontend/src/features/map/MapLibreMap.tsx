@@ -559,47 +559,67 @@ export const MapLibreMap: React.FC<MapProps> = ({
 
       {/* ─── TOP-LEFT: Flood Scenario Selector Panel ─── */}
       <div className="absolute top-4 left-4 z-20 flex flex-col gap-2" style={{ minWidth: 260 }}>
-        {/* Scenario Selector Button */}
+        {/* Scenario Selector Panel (Exactly 3 options, no duplicate header) */}
         <div className="bg-white/97 backdrop-blur border border-slate-200 rounded-xl shadow-lg overflow-hidden">
-          {/* Active Scenario Header */}
-          <button
-            onClick={() => setShowScenarioPicker(p => !p)}
-            className="w-full px-3.5 py-3 flex items-center justify-between gap-3 hover:bg-slate-50 transition-colors"
-          >
-            <div className="flex items-center gap-2.5">
-              <span className={`w-2.5 h-2.5 rounded-full ${activeScenario.severityColor} animate-pulse flex-shrink-0`} />
-              <div className="text-left">
-                <div className="text-xs font-black text-slate-900 leading-tight">{activeScenario.name}</div>
-                <div className="text-[10px] text-slate-500 mt-0.5">{activeScenario.district} • {activeScenario.water_depth} depth</div>
+          {showScenarioPicker ? (
+            <div>
+              <div className="px-3.5 py-2.5 bg-slate-100/90 border-b border-slate-200 flex items-center justify-between">
+                <span className="text-[10px] font-black uppercase tracking-wider text-slate-700 flex items-center gap-1.5">
+                  <span className="w-2 h-2 rounded-full bg-red-600 animate-pulse" />
+                  Select Scenario (3 Options)
+                </span>
+                <button
+                  onClick={() => setShowScenarioPicker(false)}
+                  className="text-slate-400 hover:text-slate-700 p-0.5 rounded transition-colors"
+                  title="Collapse picker"
+                >
+                  <ChevronDown className="w-4 h-4 rotate-180" />
+                </button>
+              </div>
+
+              <div className="divide-y divide-slate-100">
+                {FLOOD_SCENARIOS.map(scenario => {
+                  const isSelected = scenario.id === activeScenarioId;
+                  return (
+                    <button
+                      key={scenario.id}
+                      onClick={() => handleSelectScenario(scenario.id)}
+                      className={`w-full px-3.5 py-2.5 flex items-center gap-2.5 text-left transition-colors ${
+                        isSelected ? 'bg-slate-900 text-white' : 'hover:bg-slate-50 text-slate-800'
+                      }`}
+                    >
+                      <span className={`w-2 h-2 rounded-full ${scenario.severityColor} flex-shrink-0`} />
+                      <div className="min-w-0 flex-1">
+                        <div className="text-xs font-bold truncate">{scenario.name}</div>
+                        <div className={`text-[10px] ${isSelected ? 'text-slate-300' : 'text-slate-500'}`}>
+                          {scenario.district} • {scenario.severity} • {(scenario.affected_population / 1000).toFixed(0)}K affected
+                        </div>
+                      </div>
+                      {isSelected && (
+                        <span className="ml-2 text-emerald-400 text-[10px] font-bold flex-shrink-0 px-2 py-0.5 bg-emerald-950/70 border border-emerald-600/70 rounded">
+                          ACTIVE
+                        </span>
+                      )}
+                    </button>
+                  );
+                })}
               </div>
             </div>
-            <ChevronDown className={`w-4 h-4 text-slate-500 flex-shrink-0 transition-transform ${showScenarioPicker ? 'rotate-180' : ''}`} />
-          </button>
-
-          {/* Dropdown Scenario List */}
-          {showScenarioPicker && (
-            <div className="border-t border-slate-200 divide-y divide-slate-100">
-              {FLOOD_SCENARIOS.map(scenario => (
-                <button
-                  key={scenario.id}
-                  onClick={() => handleSelectScenario(scenario.id)}
-                  className={`w-full px-3.5 py-2.5 flex items-center gap-2.5 text-left transition-colors ${
-                    scenario.id === activeScenarioId ? 'bg-slate-900 text-white' : 'hover:bg-slate-50 text-slate-800'
-                  }`}
-                >
-                  <span className={`w-2 h-2 rounded-full ${scenario.severityColor} flex-shrink-0`} />
-                  <div className="min-w-0">
-                    <div className="text-xs font-bold truncate">{scenario.name}</div>
-                    <div className={`text-[10px] ${scenario.id === activeScenarioId ? 'text-slate-300' : 'text-slate-500'}`}>
-                      {scenario.district} • {scenario.severity} • {(scenario.affected_population / 1000).toFixed(0)}K affected
-                    </div>
-                  </div>
-                  {scenario.id === activeScenarioId && (
-                    <span className="ml-auto text-emerald-400 text-[10px] font-bold flex-shrink-0">ACTIVE</span>
-                  )}
-                </button>
-              ))}
-            </div>
+          ) : (
+            <button
+              onClick={() => setShowScenarioPicker(true)}
+              className="w-full px-3.5 py-3 flex items-center justify-between gap-3 hover:bg-slate-50 transition-colors"
+              title="Click to view all 3 scenarios"
+            >
+              <div className="flex items-center gap-2.5">
+                <span className={`w-2.5 h-2.5 rounded-full ${activeScenario.severityColor} animate-pulse flex-shrink-0`} />
+                <div className="text-left">
+                  <div className="text-xs font-black text-slate-900 leading-tight">{activeScenario.name}</div>
+                  <div className="text-[10px] text-slate-500 mt-0.5">{activeScenario.district} • {activeScenario.water_depth} depth</div>
+                </div>
+              </div>
+              <ChevronDown className="w-4 h-4 text-slate-500 flex-shrink-0" />
+            </button>
           )}
         </div>
 
