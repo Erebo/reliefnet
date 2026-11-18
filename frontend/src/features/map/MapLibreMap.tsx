@@ -55,19 +55,35 @@ const FLOOD_SCENARIOS = [
     severityColor: 'bg-red-600',
     water_depth: '1.8 – 3.2 m',
     affected_population: 185000,
-    affected_upazilas: ['Sonagazi', 'Feni Sadar', 'Parshuram', 'Fulgazi'],
+    affected_upazilas: ['Sonagazi', 'Feni Sadar', 'Parshuram', 'Fulgazi', 'Daganbhuiyan', 'Chhagalnaiya'],
     center: { lat: 22.95, lon: 91.41, zoom: 10.5 },
     polygon: feniSarData.polygon,
     sar_metadata: feniSarData.sarMetadata,
     institutions: [
+      // Sector A: Upstream Muhuri - Parshuram & Fulgazi North (Top Sector)
+      { id: 6, name: 'Parshuram Govt College', bangla_name: 'পরশুরাম সরকারি কলেজ', type: 'COLLEGE', district: 'Feni', upazila: 'Parshuram', union: 'Parshuram Sadar', latitude: 23.1980, longitude: 91.4400, capacity_est: 1200, phone: '+880 1812-234567', email: 'principal@parshuramcollege.edu.bd', address: 'College Road, Parshuram, Feni' },
+      { id: 7, name: 'Fulgazi Govt Pilot High School', bangla_name: 'ফুলগাজী সরকারি পাইলট হাই স্কুল', type: 'SCHOOL', district: 'Feni', upazila: 'Fulgazi', union: 'Fulgazi Sadar', latitude: 23.1560, longitude: 91.4250, capacity_est: 850, phone: '+880 1815-345678', email: 'head@fulgazipilot.edu.bd', address: 'Fulgazi Sadar, Feni' },
+      { id: 9, name: 'Parshuram Model High School & Shelter', bangla_name: 'পরশুরাম মডেল উচ্চ বিদ্যালয় ও আশ্রয়কেন্দ্র', type: 'SCHOOL', district: 'Feni', upazila: 'Parshuram', union: 'Parshuram Sadar', latitude: 23.2180, longitude: 91.4450, capacity_est: 950, phone: '+880 1812-987654', email: 'parshuram.model@gmail.com', address: 'Station Road, Parshuram, Feni' },
+
+      // Sector B: Fulgazi & Selonia River Spillway (Mid-North Sector)
+      { id: 15, name: 'Munshirhat Ali Azam High School & College', bangla_name: 'মুন্সীরহাট আলী আজম উচ্চ বিদ্যালয় ও কলেজ', type: 'COLLEGE', district: 'Feni', upazila: 'Fulgazi', union: 'Munshirhat', latitude: 23.0450, longitude: 91.4320, capacity_est: 1100, phone: '+880 1815-778899', email: 'munshirhat.college@gmail.com', address: 'Munshirhat Bazar, Fulgazi, Feni' },
+      { id: 16, name: "Fulgazi Women's College & Shelter", bangla_name: 'ফুলগাজী মহিলা কলেজ ও বন্যা আশ্রয়কেন্দ্র', type: 'COLLEGE', district: 'Feni', upazila: 'Fulgazi', union: 'Fulgazi Sadar', latitude: 23.0720, longitude: 91.4280, capacity_est: 800, phone: '+880 1815-443322', email: 'fulgazi.womens@gmail.com', address: 'Hospital Road, Fulgazi, Feni' },
+
+      // Sector C: Sonagazi Coastal Polders & Muhuri Regulator (Bottom Sector)
       { id: 1, name: 'Sonagazi Government College', bangla_name: 'সোনাগাজী সরকারি কলেজ', type: 'COLLEGE', district: 'Feni', upazila: 'Sonagazi', union: 'Sonagazi Sadar', latitude: 22.8485, longitude: 91.3912, capacity_est: 1200, phone: '+880 1819-345678', email: 'principal@sonagazigovtcollege.edu.bd', address: 'College Road, Sonagazi, Feni' },
-      { id: 2, name: 'Mangalkandi High School & Cyclone Shelter', bangla_name: 'মঙ্গলকান্দি উচ্চ বিদ্যালয়', type: 'SCHOOL', district: 'Feni', upazila: 'Sonagazi', union: 'Mangalkandi', latitude: 22.8610, longitude: 91.3780, capacity_est: 1500, phone: '+880 1817-678901', email: 'mangalkandi.school@gmail.com', address: 'Mangalkandi Union, Sonagazi, Feni' },
+      { id: 2, name: 'Mangalkandi High School & Cyclone Shelter', bangla_name: 'মঙ্গলকান্দি উচ্চ বিদ্যালয়', type: 'CYCLONE_SHELTER', district: 'Feni', upazila: 'Sonagazi', union: 'Mangalkandi', latitude: 22.8610, longitude: 91.3780, capacity_est: 1500, phone: '+880 1817-678901', email: 'mangalkandi.school@gmail.com', address: 'Mangalkandi Union, Sonagazi, Feni' },
       { id: 3, name: 'Sonagazi Model High School', bangla_name: 'সোনাগাজী মডেল হাই স্কুল', type: 'SCHOOL', district: 'Feni', upazila: 'Sonagazi', union: 'Sonagazi Sadar', latitude: 22.8450, longitude: 91.3890, capacity_est: 850, phone: '+880 1818-567890', email: 'headmaster@sonagazimodel.edu.bd', address: 'Station Road, Sonagazi' },
-      { id: 4, name: 'BDRCS Sonagazi Disaster Response Unit', bangla_name: 'বাংলাদেশ রেড ক্রিসেন্ট - সোনাগাজী', type: 'NGO', district: 'Feni', upazila: 'Sonagazi', union: 'Sonagazi Sadar', latitude: 22.8490, longitude: 91.3950, capacity_est: 500, phone: '+880 1819-876543', email: 'sonagazi@bdrcs.org', address: 'Red Crescent Disaster Response Unit, Sonagazi' },
+      { id: 4, name: 'BDRCS Sonagazi Disaster Response Unit', bangla_name: 'বাংলাদেশ রেড ক্রিসেন্ট - সোনাগাজী', type: 'NGO', district: 'Feni', upazila: 'Sonagazi', union: 'Sonagazi Sadar', latitude: 22.8350, longitude: 91.3950, capacity_est: 500, phone: '+880 1819-876543', email: 'sonagazi@bdrcs.org', address: 'Red Crescent Disaster Response Unit, Sonagazi' },
       { id: 5, name: 'BRAC Relief Hub – Sonagazi', bangla_name: 'ব্র্যাক আঞ্চলিক অফিস', type: 'NGO', district: 'Feni', upazila: 'Sonagazi', union: 'Sonagazi Sadar', latitude: 22.8430, longitude: 91.3850, capacity_est: 400, phone: '+880 1713-009988', email: 'relief.sonagazi@brac.net', address: 'BRAC Complex, Sonagazi, Feni' },
-      { id: 6, name: 'Parshuram Govt College', bangla_name: 'পরশুরাম সরকারি কলেজ', type: 'COLLEGE', district: 'Feni', upazila: 'Parshuram', union: 'Parshuram Sadar', latitude: 23.1980, longitude: 91.4400, capacity_est: 900, phone: '+880 1812-234567', email: 'principal@parshuramcollege.edu.bd', address: 'College Road, Parshuram, Feni' },
-      { id: 7, name: 'Fulgazi Pilot High School', bangla_name: 'ফুলগাজী পাইলট হাই স্কুল', type: 'SCHOOL', district: 'Feni', upazila: 'Fulgazi', union: 'Fulgazi Sadar', latitude: 23.1560, longitude: 91.4200, capacity_est: 700, phone: '+880 1815-345678', email: 'head@fulgazipilot.edu.bd', address: 'Fulgazi Sadar, Feni' },
       { id: 8, name: 'As-Sunnah Foundation Relief Camp', bangla_name: 'আস-সুন্নাহ ফাউন্ডেশন', type: 'NGO', district: 'Feni', upazila: 'Sonagazi', union: 'Sonagazi Sadar', latitude: 22.8550, longitude: 91.3910, capacity_est: 700, phone: '+880 1977-112233', email: 'relief@assunnahfoundation.org', address: 'Central Eidgah Maidan, Sonagazi, Feni' },
+
+      // Sector D: Choto Feni & Daganbhuiyan Lowlands (Western / Left Sector)
+      { id: 17, name: 'Daganbhuiyan Ataturk Govt Model High School', bangla_name: 'দাগনভূঞা আতাতুর্ক সরকারি মডেল হাই স্কুল', type: 'SCHOOL', district: 'Feni', upazila: 'Daganbhuiyan', union: 'Daganbhuiyan Sadar', latitude: 22.9380, longitude: 91.3420, capacity_est: 1100, phone: '+880 1818-223344', email: 'ataturk.model@gmail.com', address: 'Ataturk Road, Daganbhuiyan, Feni' },
+      { id: 18, name: 'Iqbal Memorial College & Flood Shelter', bangla_name: 'ইকবাল মেমোরিয়াল কলেজ ও বন্যা আশ্রয়কেন্দ্র', type: 'COLLEGE', district: 'Feni', upazila: 'Daganbhuiyan', union: 'Daganbhuiyan Sadar', latitude: 22.9220, longitude: 91.3480, capacity_est: 900, phone: '+880 1818-556677', email: 'iqbal.college@gmail.com', address: 'Hospital Road, Daganbhuiyan, Feni' },
+
+      // Sector E: Chhagalnaiya Eastern Depression (Eastern / Right Sector)
+      { id: 19, name: 'Chhagalnaiya Govt Pilot High School', bangla_name: 'ছাগলনাইয়া সরকারি পাইলট উচ্চ বিদ্যালয়', type: 'SCHOOL', district: 'Feni', upazila: 'Chhagalnaiya', union: 'Chhagalnaiya Sadar', latitude: 23.0360, longitude: 91.5080, capacity_est: 1000, phone: '+880 1814-112233', email: 'chhagalnaiya.pilot@gmail.com', address: 'College Road, Chhagalnaiya, Feni' },
+      { id: 25, name: "Chhagalnaiya Women's College & Shelter", bangla_name: 'ছাগলনাইয়া মহিলা কলেজ ও আশ্রয়কেন্দ্র', type: 'COLLEGE', district: 'Feni', upazila: 'Chhagalnaiya', union: 'Chhagalnaiya Sadar', latitude: 23.0180, longitude: 91.5020, capacity_est: 850, phone: '+880 1814-445566', email: 'chhagalnaiya.womens@gmail.com', address: 'Pourashava Road, Chhagalnaiya, Feni' },
     ],
   },
   {
@@ -78,16 +94,25 @@ const FLOOD_SCENARIOS = [
     severityColor: 'bg-orange-600',
     water_depth: '1.2 – 2.0 m',
     affected_population: 94000,
-    affected_upazilas: ['Companiganj', 'Senbagh', 'Subarnachar'],
+    affected_upazilas: ['Companiganj', 'Senbagh', 'Subarnachar', 'Kabirhat'],
     center: { lat: 22.76, lon: 91.22, zoom: 10.5 },
     polygon: noakhaliSarData.polygon,
     sar_metadata: noakhaliSarData.sarMetadata,
     institutions: [
-      { id: 10, name: 'Companiganj Govt High School', bangla_name: 'কোম্পানীগঞ্জ সরকারি উচ্চ বিদ্যালয়', type: 'SCHOOL', district: 'Noakhali', upazila: 'Companiganj', union: 'Companiganj Sadar', latitude: 22.7850, longitude: 91.2350, capacity_est: 1100, phone: '+880 1810-112233', email: 'head@companiganjhs.edu.bd', address: 'Companiganj Sadar, Noakhali' },
-      { id: 11, name: 'Senbagh Degree College', bangla_name: 'সেনবাগ ডিগ্রি কলেজ', type: 'COLLEGE', district: 'Noakhali', upazila: 'Senbagh', union: 'Senbagh Sadar', latitude: 22.8100, longitude: 91.1800, capacity_est: 800, phone: '+880 1811-445566', email: 'principal@senbaghcollege.edu.bd', address: 'Senbagh, Noakhali' },
-      { id: 12, name: 'BDRCS Noakhali District Unit', bangla_name: 'বাংলাদেশ রেড ক্রিসেন্ট - নোয়াখালী', type: 'NGO', district: 'Noakhali', upazila: 'Companiganj', union: 'Companiganj Sadar', latitude: 22.7700, longitude: 91.2200, capacity_est: 600, phone: '+880 1819-778899', email: 'noakhali@bdrcs.org', address: 'BDRCS Office, Companiganj, Noakhali' },
-      { id: 13, name: 'Subarnachar Cyclone Shelter Primary School', bangla_name: 'সুবর্ণচর আশ্রয়কেন্দ্র বিদ্যালয়', type: 'SCHOOL', district: 'Noakhali', upazila: 'Subarnachar', union: 'Subarnachar Sadar', latitude: 22.7200, longitude: 91.2600, capacity_est: 1400, phone: '+880 1812-998877', email: 'subarnachar.school@gmail.com', address: 'Subarnachar, Noakhali' },
-      { id: 14, name: 'BRAC Noakhali Coastal Response Hub', bangla_name: 'ব্র্যাক নোয়াখালী উপকূলীয় কেন্দ্র', type: 'NGO', district: 'Noakhali', upazila: 'Companiganj', union: 'Companiganj Sadar', latitude: 22.7950, longitude: 91.2100, capacity_est: 450, phone: '+880 1713-667788', email: 'noakhali@brac.net', address: 'BRAC Complex, Companiganj, Noakhali' },
+      // Sector A: Companiganj Musapur Regulator Breach & Lower Meghna Inundation (Bottom-Right Sector)
+      { id: 10, name: 'Companiganj Govt High School', bangla_name: 'কোম্পানীগঞ্জ সরকারি উচ্চ বিদ্যালয়', type: 'SCHOOL', district: 'Noakhali', upazila: 'Companiganj', union: 'Basurhat Pourashava', latitude: 22.7680, longitude: 91.2580, capacity_est: 1100, phone: '+880 1810-112233', email: 'head@companiganjhs.edu.bd', address: 'Basurhat Town, Companiganj, Noakhali' },
+      { id: 12, name: 'BDRCS Noakhali District Unit', bangla_name: 'বাংলাদেশ রেড ক্রিসেন্ট - নোয়াখালী', type: 'NGO', district: 'Noakhali', upazila: 'Companiganj', union: 'Companiganj Sadar', latitude: 22.7550, longitude: 91.2750, capacity_est: 600, phone: '+880 1819-778899', email: 'noakhali@bdrcs.org', address: 'BDRCS Field Hub, Companiganj, Noakhali' },
+      { id: 26, name: 'Musapur Union High School & Cyclone Shelter', bangla_name: 'মুছাপুর ইউনিয়ন উচ্চ বিদ্যালয় ও সাইক্লোন শেল্টার', type: 'CYCLONE_SHELTER', district: 'Noakhali', upazila: 'Companiganj', union: 'Musapur', latitude: 22.7350, longitude: 91.2850, capacity_est: 1600, phone: '+880 1810-334455', email: 'musapur.school@gmail.com', address: 'Musapur Regulator Road, Companiganj, Noakhali' },
+      { id: 27, name: 'Char Elahi Cyclone Shelter & Primary School', bangla_name: 'চর এলাহী আশ্রয়কেন্দ্র ও সরকারি প্রাথমিক বিদ্যালয়', type: 'CYCLONE_SHELTER', district: 'Noakhali', upazila: 'Companiganj', union: 'Char Elahi', latitude: 22.7050, longitude: 91.2950, capacity_est: 1200, phone: '+880 1810-556677', email: 'charelahi.school@gmail.com', address: 'Char Elahi Coastal Belt, Companiganj, Noakhali' },
+
+      // Sector B: Subarnachar Tidal Surge & Polder Wetlands (Bottom-Left Sector)
+      { id: 13, name: 'Subarnachar Shahid Zainal Abedin Model High School', bangla_name: 'সুবর্ণচর শহীদ জয়নাল আবেদীন মডেল উচ্চ বিদ্যালয়', type: 'SCHOOL', district: 'Noakhali', upazila: 'Subarnachar', union: 'Char Jabbar', latitude: 22.7120, longitude: 91.1650, capacity_est: 1400, phone: '+880 1812-998877', email: 'subarnachar.school@gmail.com', address: 'Char Jabbar Bazar, Subarnachar, Noakhali' },
+      { id: 28, name: 'Char Jabbar Degree College & Coastal Shelter', bangla_name: 'চর জব্বার ডিগ্রি কলেজ ও ঘূর্ণিঝড় আশ্রয়কেন্দ্র', type: 'CYCLONE_SHELTER', district: 'Noakhali', upazila: 'Subarnachar', union: 'Char Jabbar', latitude: 22.6820, longitude: 91.1550, capacity_est: 1100, phone: '+880 1812-445566', email: 'charjabbar.college@gmail.com', address: 'Coastal Embankment Road, Subarnachar, Noakhali' },
+
+      // Sector C: Kabirhat & Senbagh Backwater Depression (Top Sector)
+      { id: 11, name: 'Senbagh Degree College', bangla_name: 'সেনবাগ ডিগ্রি কলেজ', type: 'COLLEGE', district: 'Noakhali', upazila: 'Senbagh', union: 'Senbagh Sadar', latitude: 22.8450, longitude: 91.2150, capacity_est: 800, phone: '+880 1811-445566', email: 'principal@senbaghcollege.edu.bd', address: 'Senbagh, Noakhali' },
+      { id: 14, name: 'BRAC Noakhali Coastal Response Hub', bangla_name: 'ব্র্যাক নোয়াখালী উপকূলীয় কেন্দ্র', type: 'NGO', district: 'Noakhali', upazila: 'Kabirhat', union: 'Kabirhat Sadar', latitude: 22.8350, longitude: 91.1900, capacity_est: 450, phone: '+880 1713-667788', email: 'noakhali@brac.net', address: 'Kabirhat Road, Noakhali' },
+      { id: 29, name: 'Kabirhat Govt Model High School', bangla_name: 'কবিরহাট সরকারি মডেল উচ্চ বিদ্যালয়', type: 'SCHOOL', district: 'Noakhali', upazila: 'Kabirhat', union: 'Kabirhat Sadar', latitude: 22.8520, longitude: 91.1980, capacity_est: 1250, phone: '+880 1811-223344', email: 'kabirhat.model@gmail.com', address: 'Kabirhat Town, Noakhali' },
     ],
   },
   {
@@ -103,11 +128,21 @@ const FLOOD_SCENARIOS = [
     polygon: sylhetSarData.polygon,
     sar_metadata: sylhetSarData.sarMetadata,
     institutions: [
+      // Sector A: Surma River Channel & Gowainghat Haor Basin (Center Sector)
       { id: 20, name: 'Gowainghat Govt High School', bangla_name: 'গোয়াইনঘাট সরকারি উচ্চ বিদ্যালয়', type: 'SCHOOL', district: 'Sylhet', upazila: 'Gowainghat', union: 'Gowainghat Sadar', latitude: 25.0550, longitude: 91.9100, capacity_est: 1000, phone: '+880 1815-112233', email: 'head@gowainghaths.edu.bd', address: 'Gowainghat Sadar, Sylhet' },
-      { id: 21, name: 'Jaintapur Degree College', bangla_name: 'জৈন্তাপুর ডিগ্রি কলেজ', type: 'COLLEGE', district: 'Sylhet', upazila: 'Jaintapur', union: 'Jaintapur Sadar', latitude: 25.0800, longitude: 92.0100, capacity_est: 750, phone: '+880 1816-445566', email: 'principal@jaintapurcollege.edu.bd', address: 'Jaintapur Sadar, Sylhet' },
       { id: 22, name: 'BDRCS Sylhet Haor Response Unit', bangla_name: 'বাংলাদেশ রেড ক্রিসেন্ট - সিলেট হাওর', type: 'NGO', district: 'Sylhet', upazila: 'Gowainghat', union: 'Gowainghat Sadar', latitude: 25.0350, longitude: 91.8900, capacity_est: 500, phone: '+880 1819-334455', email: 'sylhet.haor@bdrcs.org', address: 'BDRCS Haor Unit, Gowainghat, Sylhet' },
-      { id: 23, name: 'Companiganj (Sylhet) Primary Shelter School', bangla_name: 'কোম্পানীগঞ্জ আশ্রয়কেন্দ্র বিদ্যালয়, সিলেট', type: 'SCHOOL', district: 'Sylhet', upazila: 'Companiganj', union: 'Companiganj Sadar', latitude: 25.0650, longitude: 91.9600, capacity_est: 1300, phone: '+880 1812-556677', email: 'companiganj.sylhet@gmail.com', address: 'Companiganj, Sylhet' },
       { id: 24, name: 'BRAC Sylhet Haor Flood Response Hub', bangla_name: 'ব্র্যাক সিলেট হাওর বন্যা কেন্দ্র', type: 'NGO', district: 'Sylhet', upazila: 'Gowainghat', union: 'Gowainghat Sadar', latitude: 25.0200, longitude: 91.9300, capacity_est: 380, phone: '+880 1713-889900', email: 'sylhet.haor@brac.net', address: 'BRAC Haor Centre, Gowainghat, Sylhet' },
+      { id: 30, name: 'Alirgaon High School & Haor Shelter', bangla_name: 'আলিঁরগাঁও উচ্চ বিদ্যালয় ও আশ্রয়কেন্দ্র', type: 'SCHOOL', district: 'Sylhet', upazila: 'Gowainghat', union: 'Alirgaon', latitude: 25.0600, longitude: 91.9550, capacity_est: 850, phone: '+880 1815-667788', email: 'alirgaon.school@gmail.com', address: 'Alirgaon Bazar, Gowainghat, Sylhet' },
+
+      // Sector B: Companiganj Bholaganj Wetlands (Western / Left Sector)
+      { id: 23, name: 'Companiganj Thana Sadar High School', bangla_name: 'কোম্পানীগঞ্জ থানা সদর উচ্চ বিদ্যালয়', type: 'SCHOOL', district: 'Sylhet', upazila: 'Companiganj', union: 'Companiganj Sadar', latitude: 25.0850, longitude: 91.7750, capacity_est: 1300, phone: '+880 1812-556677', email: 'companiganj.sylhet@gmail.com', address: 'Thana Road, Companiganj, Sylhet' },
+      { id: 31, name: 'Bholaganj Border Primary Shelter School', bangla_name: 'ভোলাগঞ্জ সীমান্ত প্রাথমিক বিদ্যালয় ও আশ্রয়কেন্দ্র', type: 'SCHOOL', district: 'Sylhet', upazila: 'Companiganj', union: 'Bholaganj', latitude: 25.1100, longitude: 91.7700, capacity_est: 800, phone: '+880 1812-778899', email: 'bholaganj.school@gmail.com', address: 'Bholaganj Zero Point Road, Companiganj, Sylhet' },
+      { id: 32, name: 'BRAC Companiganj Flood Rescue Station', bangla_name: 'ব্র্যাক কোম্পানীগঞ্জ বন্যা উদ্ধার কেন্দ্র', type: 'NGO', district: 'Sylhet', upazila: 'Companiganj', union: 'Companiganj Sadar', latitude: 25.0700, longitude: 91.8050, capacity_est: 500, phone: '+880 1713-776655', email: 'companiganj.brac@gmail.com', address: 'BRAC Complex, Companiganj, Sylhet' },
+
+      // Sector C: Jaintapur Border Haors & Sari River Overflow (Eastern / Right Sector)
+      { id: 21, name: 'Jaintapur Degree College', bangla_name: 'জৈন্তাপুর ডিগ্রি কলেজ', type: 'COLLEGE', district: 'Sylhet', upazila: 'Jaintapur', union: 'Jaintapur Sadar', latitude: 25.0800, longitude: 92.0250, capacity_est: 750, phone: '+880 1816-445566', email: 'principal@jaintapurcollege.edu.bd', address: 'Jaintapur Sadar, Sylhet' },
+      { id: 33, name: 'Jaintapur Govt High School', bangla_name: 'জৈন্তাপুর সরকারি উচ্চ বিদ্যালয়', type: 'SCHOOL', district: 'Sylhet', upazila: 'Jaintapur', union: 'Jaintapur Sadar', latitude: 25.0650, longitude: 92.0450, capacity_est: 1050, phone: '+880 1816-778899', email: 'jaintapur.govt@gmail.com', address: 'Main Road, Jaintapur, Sylhet' },
+      { id: 34, name: 'Sari River Haor Rescue Camp', bangla_name: 'সারি নদী হাওর উদ্ধার ক্যাম্প', type: 'NGO', district: 'Sylhet', upazila: 'Jaintapur', union: 'Nijpat', latitude: 25.0950, longitude: 92.0500, capacity_est: 600, phone: '+880 1819-223344', email: 'sari.rescue@gmail.com', address: 'Sari Ghat, Jaintapur, Sylhet' },
     ],
   },
 ];
