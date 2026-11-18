@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import {
   MessageSquare, ShieldCheck, Package, Truck, CheckCircle2,
   Clock, AlertTriangle, ChevronRight, MapPin, ArrowRight,
-  ChevronDown, Circle, Play, RefreshCw, Cpu,
+  ChevronDown, Circle, Play, RefreshCw,
   X, ExternalLink
 } from 'lucide-react';
 
@@ -205,10 +205,9 @@ export const OverviewPage: React.FC = () => {
   const [smsData, setSmsData] = useState(INITIAL_SMS);
   const [reliefData, setReliefData] = useState(INITIAL_RELIEF_STATUS);
 
-  // Multithreading Simulation State
-  const [isProcessingThreads, setIsProcessingThreads] = useState(false);
-  const [threadLogs, setThreadLogs] = useState<string[]>([]);
-  const [showThreadPanel, setShowThreadPanel] = useState(false);
+  // Inbound SMS Gateway Simulation State
+  const [isSimulatingSMS, setIsSimulatingSMS] = useState(false);
+  const [notificationToast, setNotificationToast] = useState<string | null>(null);
 
   const scenario = FLOOD_SCENARIOS.find(s => s.id === activeScenarioId) || FLOOD_SCENARIOS[0];
   const smsMessages = smsData[activeScenarioId] || [];
@@ -224,37 +223,11 @@ export const OverviewPage: React.FC = () => {
     navigate(`/map?scenario=${activeScenarioId}&lat=${msg.lat}&lon=${msg.lon}&zoom=14.5&instId=${msg.institutionId}&area=${encodeURIComponent(msg.area)}`);
   };
 
-  // 1. Multithreaded Ingestion Simulation
-  const handleRunThreadedSMSIngestion = () => {
-    setIsProcessingThreads(true);
-    setShowThreadPanel(true);
-    setThreadLogs([]);
-
-    const newLogs: string[] = [];
-    const addLog = (msg: string) => {
-      newLogs.push(msg);
-      setThreadLogs([...newLogs]);
-    };
-
-    addLog('[ThreadPool] Initializing 3 SMSProcessorWorker threads...');
+  // Simulate Inbound Distress SMS via Telco Webhook
+  const handleSimulateInboundSMS = () => {
+    setIsSimulatingSMS(true);
 
     setTimeout(() => {
-      addLog('[WorkerThread-Feni] Ingesting SMS from Sonagazi: "+880 1799-445566: Water reached rooftop. 12 people trapped"');
-    }, 400);
-
-    setTimeout(() => {
-      addLog('[WorkerThread-Noakhali] Ingesting SMS from Companiganj: "+880 1888-223344: Need food rations and water purification"');
-    }, 800);
-
-    setTimeout(() => {
-      addLog('[WorkerThread-Sylhet] Validation error: "INVALID_PHONE: 017999 - Missing +880 country code" (InvalidDistressSignalException caught)');
-    }, 1200);
-
-    setTimeout(() => {
-      addLog('[ThreadPool] Ingestion completed. 2 new distress signals queued for ground verification.');
-      setIsProcessingThreads(false);
-
-      // Append new message into current scenario with coordinates
       const newMsg = {
         id: Date.now(),
         from: '+880 1799-445566',
@@ -273,7 +246,10 @@ export const OverviewPage: React.FC = () => {
         ...prev,
         [activeScenarioId]: [newMsg, ...(prev[activeScenarioId] || [])]
       }));
-    }, 1800);
+      setIsSimulatingSMS(false);
+      setNotificationToast(`Incoming distress signal received from ${scenario.district} (+880 1799-445566)`);
+      setTimeout(() => setNotificationToast(null), 5000);
+    }, 600);
   };
 
   // 4. Verification Action
@@ -323,12 +299,12 @@ export const OverviewPage: React.FC = () => {
 
         <div className="flex items-center gap-2">
           <button
-            onClick={handleRunThreadedSMSIngestion}
-            disabled={isProcessingThreads}
+            onClick={handleSimulateInboundSMS}
+            disabled={isSimulatingSMS}
             className="flex items-center gap-1.5 px-3 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl text-xs font-bold transition-all shadow-sm disabled:opacity-50"
           >
-            <Cpu className="w-3.5 h-3.5" />
-            {isProcessingThreads ? 'Workers Running...' : 'Simulate Thread Ingestion'}
+            <MessageSquare className="w-3.5 h-3.5" />
+            {isSimulatingSMS ? 'Receiving Report…' : 'Simulate Inbound SMS'}
           </button>
 
           <button
@@ -340,31 +316,21 @@ export const OverviewPage: React.FC = () => {
         </div>
       </div>
 
-      {/* ── Multithreaded Worker Telemetry Panel ─────────────────────── */}
-      {showThreadPanel && (
-        <div className="bg-slate-900 text-white rounded-2xl p-4 border border-slate-800 shadow-xl space-y-3">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <Cpu className="w-4 h-4 text-indigo-400" />
-              <span className="text-xs font-bold uppercase tracking-wider text-indigo-300">
-                Java Multithreading Engine: SMSProcessorPool
-              </span>
-            </div>
-            <div className="flex items-center gap-2">
-              <span className="text-[10px] bg-slate-800 px-2 py-0.5 rounded text-slate-300 font-mono">3 Active Worker Threads</span>
-              <button onClick={() => setShowThreadPanel(false)} className="text-slate-400 hover:text-white">
-                <X className="w-3.5 h-3.5" />
-              </button>
-            </div>
+      {/* ── Real-Time Gateway Notification Toast ─────────────────────── */}
+      {notificationToast && (
+        <div className="bg-slate-900 text-white rounded-xl px-4 py-3 border border-slate-800 shadow-xl flex items-center justify-between animate-in fade-in slide-in-from-top-2">
+          <div className="flex items-center gap-2.5">
+            <span className="relative flex h-2.5 w-2.5">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
+              <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500" />
+            </span>
+            <span className="text-xs font-semibold text-slate-200">
+              ⚡ <strong>SMS Gateway Ingested</strong>: {notificationToast}
+            </span>
           </div>
-
-          <div className="bg-slate-950 rounded-xl p-3 font-mono text-[11px] space-y-1 max-h-36 overflow-y-auto border border-slate-800">
-            {threadLogs.map((log, idx) => (
-              <div key={idx} className={`${log.includes('ERROR') || log.includes('Exception') ? 'text-red-400' : log.includes('Successfully') ? 'text-emerald-400' : 'text-slate-300'}`}>
-                {log}
-              </div>
-            ))}
-          </div>
+          <button onClick={() => setNotificationToast(null)} className="text-slate-400 hover:text-white p-1">
+            <X className="w-3.5 h-3.5" />
+          </button>
         </div>
       )}
 
@@ -390,7 +356,7 @@ export const OverviewPage: React.FC = () => {
       {/* ── Pipeline Summary KPIs ────────────────────────────────────── */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
         {[
-          { icon: MessageSquare, label: 'SMS Ingested', value: smsMessages.length, sub: 'via Multi-threaded pool', color: 'text-indigo-600', bg: 'bg-indigo-50' },
+          { icon: MessageSquare, label: 'SMS Ingested', value: smsMessages.length, sub: 'via Telco / Webhook Gateway', color: 'text-indigo-600', bg: 'bg-indigo-50' },
           { icon: ShieldCheck,   label: 'Pending Verification', value: pendingCount, sub: 'needs ground check', color: 'text-orange-600', bg: 'bg-orange-50' },
           { icon: AlertTriangle, label: 'Relief Need List', value: awaitingCount, sub: 'verified, awaiting relief', color: 'text-red-600', bg: 'bg-red-50' },
           { icon: Truck,         label: 'Active Operations', value: dispatchedCount, sub: 'active / delivered', color: 'text-emerald-600', bg: 'bg-emerald-50' },
