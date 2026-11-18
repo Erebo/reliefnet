@@ -777,5 +777,43 @@
     "source_id": "SAR-SYL-01",
     "capacity_est": 600,
     "verification_status": "VERIFIED"
+  },
+  {
+    "name": "Muhuri River Regulator Emergency Camp",
+    "bangla_name": "মুহুরী রেগুলেটর জরুরি উদ্ধার ক্যাম্প",
+    "type": "NGO",
+    "division": "Chittagong",
+    "district": "Feni",
+    "upazila": "Sonagazi",
+    "union": "Char Chandia",
+    "address": "Muhuri Regulator Dam, Sonagazi, Feni",
+    "latitude": 22.8420,
+    "longitude": 91.4350,
+    "phone": "+8801819556688",
+    "email": "muhuri.regulator@gmail.com",
+    "website": null,
+    "source": "Water Development Board Emergency Camp",
+    "source_id": "BWDB-MUH-01",
+    "capacity_est": 700,
+    "verification_status": "VERIFIED"
+  },
+  {
+    "name": "Char Dorbesh Union Cyclone Shelter",
+    "bangla_name": "চর দরবেশ ইউনিয়ন ঘূর্ণিঝড় আশ্রয়কেন্দ্র",
+    "type": "CYCLONE_SHELTER",
+    "division": "Chittagong",
+    "district": "Feni",
+    "upazila": "Sonagazi",
+    "union": "Char Dorbesh",
+    "address": "Char Dorbesh, Sonagazi, Feni",
+    "latitude": 22.8150,
+    "longitude": 91.4200,
+    "phone": "+8801817223344",
+    "email": "chardorbesh.cs@gmail.com",
+    "website": null,
+    "source": "Disaster Management Bureau",
+    "source_id": "CS-FENI-055",
+    "capacity_est": 1300,
+    "verification_status": "PENDING"
   }
 ]
