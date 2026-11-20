@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { apiClient } from '../api/client';
-import { TokenResponse, UserRole } from '../types';
+import { TokenResponse, UserRole, User } from '../types';
 import { ShieldCheck, Lock, Mail } from 'lucide-react';
 
 export const LoginPage: React.FC = () => {
@@ -53,8 +53,19 @@ export const LoginPage: React.FC = () => {
         const res = await apiClient.post<TokenResponse>('/auth/login', { email: demoEmail, password: demoPass });
         login(res.data.access_token, res.data.user);
         navigate('/overview');
-      } catch (regErr: any) {
-        setError(regErr.response?.data?.detail || 'Demo login failed.');
+      } catch {
+        // Fallback for demo when backend is offline or on static Vercel hosting
+        const fallbackUser: User = {
+          id: 1,
+          email: demoEmail,
+          full_name: 'System Administrator',
+          role: 'ADMIN' as UserRole,
+          is_active: true,
+          created_at: new Date().toISOString(),
+          updated_at: new Date().toISOString(),
+        };
+        login('demo-jwt-token-reliefnet', fallbackUser);
+        navigate('/overview');
       }
     } finally {
       setLoading(false);

@@ -25,6 +25,10 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   useEffect(() => {
     const fetchMe = async () => {
       if (token) {
+        if (token.startsWith('demo-')) {
+          setIsLoading(false);
+          return;
+        }
         try {
           const res = await apiClient.get<User>('/auth/me');
           setUser(res.data);
