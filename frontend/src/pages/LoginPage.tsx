@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { apiClient } from '../api/client';
@@ -6,12 +6,18 @@ import { TokenResponse, UserRole } from '../types';
 import { ShieldCheck, Lock, Mail } from 'lucide-react';
 
 export const LoginPage: React.FC = () => {
-  const { login } = useAuth();
+  const { user, token, login } = useAuth();
   const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    if (token && user) {
+      navigate('/overview', { replace: true });
+    }
+  }, [token, user, navigate]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -20,7 +26,7 @@ export const LoginPage: React.FC = () => {
     try {
       const res = await apiClient.post<TokenResponse>('/auth/login', { email, password });
       login(res.data.access_token, res.data.user);
-      navigate('/map');
+      navigate('/overview');
     } catch (err: any) {
       setError(err.response?.data?.detail || 'Invalid credentials. Please try again.');
     } finally {
@@ -37,7 +43,7 @@ export const LoginPage: React.FC = () => {
     try {
       const res = await apiClient.post<TokenResponse>('/auth/login', { email: demoEmail, password: demoPass });
       login(res.data.access_token, res.data.user);
-      navigate('/map');
+      navigate('/overview');
     } catch {
       try {
         await apiClient.post('/auth/register', {
@@ -46,7 +52,7 @@ export const LoginPage: React.FC = () => {
         });
         const res = await apiClient.post<TokenResponse>('/auth/login', { email: demoEmail, password: demoPass });
         login(res.data.access_token, res.data.user);
-        navigate('/map');
+        navigate('/overview');
       } catch (regErr: any) {
         setError(regErr.response?.data?.detail || 'Demo login failed.');
       }

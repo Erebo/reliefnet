@@ -4,7 +4,7 @@ import { Navbar } from './Navbar';
 
 export const AppLayout: React.FC = () => {
   const location = useLocation();
-  const isMap = location.pathname === '/map' || location.pathname === '/';
+  const isMap = location.pathname === '/map';
 
   return (
     <div className="min-h-screen bg-slate-50 flex flex-col font-sans text-slate-900 antialiased selection:bg-slate-200">

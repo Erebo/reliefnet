@@ -34,8 +34,8 @@ export const Navbar: React.FC = () => {
   };
 
   const navItems = [
-    { label: 'Response Map', path: '/map', icon: Map },
     { label: 'Overview', path: '/overview', icon: LayoutDashboard },
+    { label: 'Response Map', path: '/map', icon: Map },
     { label: 'Relief Operations', path: '/operations', icon: Truck },
     { label: 'About', path: '/about', icon: BookOpen },
   ];
@@ -45,7 +45,7 @@ export const Navbar: React.FC = () => {
       {/* Brand & Subtitle */}
       <div className="flex items-center gap-6">
         <div 
-          onClick={() => navigate('/map')}
+          onClick={() => navigate('/overview')}
           className="cursor-pointer select-none"
         >
           <div className="text-base font-bold tracking-tight text-slate-900 leading-tight">
@@ -142,7 +142,10 @@ export const Navbar: React.FC = () => {
               <span className="text-[10px] text-slate-500 font-mono capitalize">{user.role.toLowerCase()}</span>
             </div>
             <button
-              onClick={logout}
+              onClick={() => {
+                logout();
+                navigate('/login');
+              }}
               title="Sign Out"
               className="p-1.5 rounded-md border border-slate-200 text-slate-500 hover:text-slate-900 hover:bg-slate-50 transition-colors"
             >
