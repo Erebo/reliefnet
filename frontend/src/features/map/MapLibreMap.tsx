@@ -280,7 +280,7 @@ export const MapLibreMap: React.FC<MapProps> = ({
   // Load providers from API
   useEffect(() => {
     apiClient.get<ReliefProvider[]>('/providers').then(r => {
-      if (r.data?.length) setProviders(r.data);
+      if (Array.isArray(r.data) && r.data.length) setProviders(r.data);
     }).catch(() => {});
   }, []);
 
@@ -521,9 +521,11 @@ export const MapLibreMap: React.FC<MapProps> = ({
         verifier_notes: verifyNotes,
         contact_phone: selectedInst.phone,
       }).catch(() => {});
-      setPanelMode('ASSIGN_RELIEF');
     } catch {}
-    finally { setSubmittingVerify(false); }
+    finally {
+      setSubmittingVerify(false);
+      setPanelMode('ASSIGN_RELIEF');
+    }
   };
 
   // Submit Relief Assignment
@@ -532,9 +534,29 @@ export const MapLibreMap: React.FC<MapProps> = ({
     setSubmittingAssign(true);
     const totalPeople = verifyPeople + verifyChildren;
     const estHouseholds = Math.max(1, Math.round(totalPeople / 4));
+    const fallbackAssignment: ReliefAssignment = {
+      id: 101,
+      provider_id: selectedProviderId || 1,
+      provider_name: selectedProviderId === 2 ? 'BRAC Humanitarian Response Team' : selectedProviderId === 3 ? 'As-Sunnah Foundation Flood Relief' : 'BDRCS Relief Team',
+      destination_division: 'Chittagong',
+      destination_district: activeScenario.district,
+      destination_upazila: activeScenario.affected_upazilas[0],
+      priority: 'HIGH',
+      status: 'ASSIGNED',
+      allocated_resources: JSON.stringify([
+        { category: 'FOOD', item_name: 'Emergency Food Packs', quantity: foodQuantity, unit: 'packages' },
+        { category: 'WATER', item_name: 'Clean Drinking Water', quantity: waterQuantity, unit: 'liters' },
+        { category: 'MEDICINE', item_name: 'First Aid Kits', quantity: medQuantity, unit: 'kits' },
+      ]),
+      target_households: estHouseholds,
+      target_people: totalPeople,
+      created_at: new Date().toISOString(),
+      updated_at: new Date().toISOString(),
+    };
+
     try {
       const res = await apiClient.post<ReliefAssignment>('/assignments', {
-        provider_id: selectedProviderId,
+        provider_id: selectedProviderId || 1,
         destination_district: activeScenario.district,
         destination_upazila: activeScenario.affected_upazilas[0],
         target_households: estHouseholds,
@@ -544,13 +566,20 @@ export const MapLibreMap: React.FC<MapProps> = ({
           { category: 'WATER', item_name: 'Clean Drinking Water', quantity: waterQuantity, unit: 'liters' },
           { category: 'MEDICINE', item_name: 'First Aid Kits', quantity: medQuantity, unit: 'kits' },
         ]),
-      }).catch(() => ({
-        data: { id: 1, status: 'ASSIGNED', provider_name: 'BDRCS Relief Team', target_households: estHouseholds } as ReliefAssignment
-      }));
-      setActiveAssignment(res.data);
+      }).catch(() => ({ data: fallbackAssignment }));
+
+      const asgData = (res?.data && typeof res.data === 'object' && 'status' in res.data)
+        ? res.data
+        : fallbackAssignment;
+
+      setActiveAssignment(asgData);
       setPanelMode('TRACK_OPERATION');
-    } catch {}
-    finally { setSubmittingAssign(false); }
+    } catch {
+      setActiveAssignment(fallbackAssignment);
+      setPanelMode('TRACK_OPERATION');
+    } finally {
+      setSubmittingAssign(false);
+    }
   };
 
   const handleAdvanceStatus = async (newStatus: any) => {
@@ -1005,7 +1034,7 @@ export const MapLibreMap: React.FC<MapProps> = ({
                   <label className="block text-slate-800 font-bold mb-1">Select Relief Provider</label>
                   <select value={selectedProviderId} onChange={e => setSelectedProviderId(parseInt(e.target.value))}
                     className="w-full border border-slate-300 rounded-lg px-2.5 py-1.5 text-xs text-slate-900 bg-white">
-                    {providers.length > 0 ? providers.map(p => (
+                    {Array.isArray(providers) && providers.length > 0 ? providers.map(p => (
                       <option key={p.id} value={p.id}>{p.name}</option>
                     )) : (
                       <>
