@@ -40,21 +40,7 @@ const ProtectedRoute: React.FC<{ children: React.ReactElement }> = ({ children }
 };
 
 const RootRedirect: React.FC = () => {
-  const { token, isLoading } = useAuth();
-
-  if (isLoading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-slate-50">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-slate-900" />
-      </div>
-    );
-  }
-
-  if (!token) {
-    return <Navigate to="/login" replace />;
-  }
-
-  return <Navigate to="/overview" replace />;
+  return <Navigate to="/login" replace />;
 };
 
 export const App: React.FC = () => {
